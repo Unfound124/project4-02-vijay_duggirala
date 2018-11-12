@@ -28,7 +28,7 @@ bool GroceryInventory::AddItem(const string& name, int quantity, float price, bo
 	return true;
 }
 
-void GroceryInventory::CreateFromFile(const string& fileName)
+void GroceryInventory::CreateFromFile(const string& fileName) //given function. Did not touch.
 {
     ifstream	file(fileName);
 	string		name;
@@ -62,7 +62,34 @@ void GroceryInventory::CreateFromFile(const string& fileName)
 
 Receipt GroceryInventory::CreateReceipt(const string& fileName)
 {
-	//	TO BE COMPLETED.
+		Receipt myReceipt; //final receipt object to return
+		ReceiptItem tempRItem; // receipt item that will be inserted into the vector inside myReceipt
+		ifstream file(fileName);
+		string fName;
+		float subtotal = 0.0;
+		float taxableAmt = 0.0;
+		while(true){
+			file >> fName;
+			if(!file.fail()) //read until file >> fname failes.
+			{
+				myIterator = myInventory.begin(); //reset the iterator
+				myIterator = myInventory.find(fName); // find the Item by the key from file
+				myIterator->second.quantity_ -= 1; // reduce the quantity of that item
+				tempRItem = ReceiptItem(fName, myIterator->second.price_); //make the tempRItem object
+				subtotal += myIterator->second.price_; // add price to subtotal
+				if(myIterator->second.taxable_)// add price to taxable amt if item is taxable
+					taxableAmt += myIterator->second.price_;
+				myReceipt.item_.push_back(tempRItem); // push tempRItem into the item_ vector inside the receipt
+			}
+			else{
+				break; //break out of while loop when end of file is reached.
+			}
+		}
+		file.close(); //close the file
+		myReceipt.subtotal_ = subtotal; //put subtotal into myReceipt
+		myReceipt.taxAmount_ =  taxableAmt * (myTaxRate/100); // calculate tax taxAmount and insert into myReceipt
+		myReceipt.total_ = subtotal + myReceipt.taxAmount_; //calculate total and insert into myReceipt
+		return myReceipt; //return the completed receipt
 }
 
 GroceryItem*	GroceryInventory::FindItem(const string& name)
