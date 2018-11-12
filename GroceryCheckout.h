@@ -12,7 +12,7 @@ struct GroceryItem
 	GroceryItem() { }
 	GroceryItem(const string& name, int quantity, float price, bool taxable)
 	: name_(name), quantity_(quantity), price_(price), taxable_(taxable) { }
-	
+
 	string	name_;
 	int		quantity_;
 	float	price_;
@@ -24,7 +24,7 @@ struct ReceiptItem
 	ReceiptItem() { }
 	ReceiptItem(const string& name, float price)
 	: name_(name), price_(price) { }
-	
+
 	string	name_;
 	float	price_;
 };
@@ -40,8 +40,7 @@ struct	Receipt
 class GroceryInventory
 {
 	public:
-		bool			AddItem(const string& name, int quantity,
-								float price, bool taxable);
+		bool			AddItem(const string& name, int quantity, float price, bool taxable);
 		void			CreateFromFile(const string& fileName);
 		Receipt			CreateReceipt(const string& checkoutFile);
 		GroceryItem*	FindItem(const string& name);
@@ -55,10 +54,8 @@ class GroceryInventory
 		//
 		map<string, GroceryItem> myInventory; //Main map that holds all the items and their data
 		map<string, GroceryItem>::iterator myIterator; //iterator for myInventory
-		int invSize; //int to hold inventory size
+		size_t invSize; //int to hold inventory size
+		float myTaxRate; //float for taxRate
 };
-GroceryInventory::GroceryInventory() { //Default Constructor implementation
-	invSize = 0;
-	myIterator = myInventory.begin();
-}
+
 #endif
