@@ -48,12 +48,17 @@ class GroceryInventory
 		bool			RemoveItem(const string& name);
 		void			SetTaxRate(float taxRate);
 		size_t			Size();
-
+		GroceryInventory(); // default constructor
 	private:
 		//
 		//	TO BE COMPLETED.
 		//
-
+		map<string, GroceryItem> myInventory; //Main map that holds all the items and their data
+		map<string, GroceryItem>::iterator myIterator; //iterator for myInventory
+		int invSize; //int to hold inventory size
 };
-
+GroceryInventory::GroceryInventory() { //Default Constructor implementation
+	invSize = 0;
+	myIterator = myInventory.begin();
+}
 #endif

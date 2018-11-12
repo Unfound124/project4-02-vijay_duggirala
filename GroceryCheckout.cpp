@@ -8,6 +8,8 @@ bool GroceryInventory::AddItem(const string& name, int quantity,
 							   float price, bool taxable)
 {
 	//	TO BE COMPLETED.
+	GroceryItem tempItem = new GroceryItem(name, quantity, price, taxable); // create a new grocery item struct-instance w/ given parameters 
+
 }
 
 void GroceryInventory::CreateFromFile(const string& fileName)
